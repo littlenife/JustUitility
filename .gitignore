@@ -60,3 +60,13 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+# windows plain swift 
+*.exe
+*.exp
+*.lib
+/**/desktop.ini
+/**/project.plainswift
+*.bat
+*~
+*.un~
