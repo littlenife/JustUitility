@@ -85,7 +85,7 @@ struct FIFOQueue<Element> {
 
     mutating func dequeue()->Element? {
         if left.isEmpty {
-            left = right.reverse()
+            left = right.reversed()
             right.removeAll()
         }
        return left.popLast()
@@ -94,16 +94,18 @@ struct FIFOQueue<Element> {
 
 extension FIFOQueue:Collection {
     public var startIndex:Int { return 0 }
-    public var endIndex: Int { return left.count + right.count }
-    public func index(after:Int) -> Int {
-        precondition((i >= startIndex && i <endIndex), "index out of bounds")
+    public var endIndex:Int { return left.count + right.count }
+    public func index(after i: Int) -> Int {
+        precondition(i >= startIndex && i < endIndex,"")
         return i + 1
     }
+
+
 
     public subscript(position:Int) -> Element {
         precondition((startIndex ..< endIndex).contains(position),"index out of bounds")
         if position < left.endIndex {
-            return left[left.count - postion -1]
+            return left[left.count - position - 1]
         } else {
             return right[position - left.count]
         }
