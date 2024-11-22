@@ -75,6 +75,44 @@ extension SafeHTML:CustomDebugStringConvertible {
     return y < x ? y : x
 }
 
+struct FIFOQueue<Element> {
+    private var left:[Element] = []
+    private var right:[Element] = []
+
+    mutating func enqueue(_ newElement:Element) {
+        right.append(newElement)
+    }
+
+    mutating func dequeue()->Element? {
+        if left.isEmpty {
+            left = right.reverse()
+            right.removeAll()
+        }
+       return left.popLast()
+    }
+}
+
+extension FIFOQueue:Collection {
+    public var startIndex:Int { return 0 }
+    public var endIndex: Int { return left.count + right.count }
+    public func index(after:Int) -> Int {
+        precondition((i >= startIndex && i <endIndex), "index out of bounds")
+        return i + 1
+    }
+
+    public subscript(position:Int) -> Element {
+        precondition((startIndex ..< endIndex).contains(position),"index out of bounds")
+        if position < left.endIndex {
+            return left[left.count - postion -1]
+        } else {
+            return right[position - left.count]
+        }
+    }
+}
+
+
+
+
 func main() {
 
 //    let safe:SafeHTML = "<p>Angle brackets in literals are not escaped</p>"
